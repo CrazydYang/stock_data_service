@@ -411,6 +411,102 @@ def index_zh_a_hist(code):
     except Exception as e:
         return error_response(str(e), 500)
 
+@bp.route('/stock/account/statistics', methods=['GET'])
+def stock_account_statistics():
+    """
+    获取股票账户统计月度数据
+    
+    描述: 东方财富网-数据中心-特色数据-股票账户统计
+    数据来源: https://data.eastmoney.com/cjsj/gpkhsj.html
+    
+    Returns:
+        {
+            "code": 200,
+            "message": "success",
+            "data": [
+                {
+                    "数据日期": "2023-08",
+                    "新增投资者-数量": 99.59,
+                    "新增投资者-环比": 0.094,
+                    "新增投资者-同比": -0.2709,
+                    "期末投资者-总量": 23214.86,
+                    "期末投资者-A股账户": 22924.67,
+                    "期末投资者-B股账户": 290.19,
+                    "沪深总市值": 85014.19,
+                    "沪深户均市值": 36.62,
+                    "上证指数-收盘": 3119.88,
+                    "上证指数-涨跌幅": -5.2009
+                },
+                ...
+            ]
+        }
+    """
+    try:
+        # 调用akshare接口获取股票账户统计数据
+        account_stats = ak.stock_account_statistics_em()
+        
+        if account_stats is None or account_stats.empty:
+            return error_response('无法获取股票账户统计数据', 404)
+        
+        # 转换日期格式
+        account_stats['date'] = pd.to_datetime(account_stats['数据日期']).dt.strftime('%Y-%m')
+        
+        # 转换为JSON字符串，确保中文正确显示
+        account_stats_json = json.loads(account_stats.to_json(orient="records", force_ascii=False))
+        
+        return success_response(account_stats_json)
+        
+    except Exception as e:
+        return error_response(f'获取股票账户统计数据失败: {str(e)}', 500)
+
+@bp.route('/stock/account/statistics', methods=['GET'])
+def stock_market_activity_legu():
+    """
+    获取股票账户统计月度数据
+    
+    描述: 东方财富网-数据中心-特色数据-股票账户统计
+    数据来源: https://data.eastmoney.com/cjsj/gpkhsj.html
+    
+    Returns:
+        {
+            "code": 200,
+            "message": "success",
+            "data": [
+                {
+                    "数据日期": "2023-08",
+                    "新增投资者-数量": 99.59,
+                    "新增投资者-环比": 0.094,
+                    "新增投资者-同比": -0.2709,
+                    "期末投资者-总量": 23214.86,
+                    "期末投资者-A股账户": 22924.67,
+                    "期末投资者-B股账户": 290.19,
+                    "沪深总市值": 85014.19,
+                    "沪深户均市值": 36.62,
+                    "上证指数-收盘": 3119.88,
+                    "上证指数-涨跌幅": -5.2009
+                },
+                ...
+            ]
+        }
+    """
+    try:
+        # 调用akshare接口获取股票账户统计数据
+        account_stats = ak.stock_market_activity_legu()
+        
+        if account_stats is None or account_stats.empty:
+            return error_response('无法获取股票账户统计数据', 404)
+        
+        # 转换日期格式
+        account_stats['date'] = pd.to_datetime(account_stats['数据日期']).dt.strftime('%Y-%m')
+        
+        # 转换为JSON字符串，确保中文正确显示
+        account_stats_json = json.loads(account_stats.to_json(orient="records", force_ascii=False))
+        
+        return success_response(account_stats_json)
+        
+    except Exception as e:
+        return error_response(f'获取股票账户统计数据失败: {str(e)}', 500)
+
 @bp.route('/stock/types/batch', methods=['POST'])
 def get_stock_types_batch():
     """

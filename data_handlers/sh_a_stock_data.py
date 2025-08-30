@@ -798,12 +798,11 @@ def get_all_industries() -> Optional[List[Dict]]:
 
 if __name__ == "__main__":
     # 测试获取所有股票类型
-    # all_stocks = get_sh_a_realtime_stocks()
-    # if all_stocks:
-    #     print("所有股票:")
-    #     for stock in all_stocks:
-    #         stock_base_info = get_stock_type_info(stock['code'])
-    #         print(stock_base_info)
-    # else:
-    #     print("获取股票失败")
+    all_industries = get_all_industries()
+    if all_industries:
+        print("所有行业:")
+        for industry in all_industries:
+            print(industry)
+    else:
+        print("获取股票失败")
     pass
