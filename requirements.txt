@@ -5,10 +5,10 @@ Flask-Limiter==3.5.0
 
 # 数据获取
 requests==2.31.0
-aiohttp==3.8.6
-pandas==2.1.1
-numpy==1.24.3
-akshare==1.11.96
+aiohttp
+pandas
+numpy
+akshare
 
 # 缓存和数据库
 redis==5.0.1

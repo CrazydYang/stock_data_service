@@ -103,6 +103,3 @@ Thumbs.db
 
 # 项目特定
 logs/
-data/*.db
-data/*.csv
-data/*.json
